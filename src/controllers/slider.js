@@ -4,11 +4,6 @@
 
 ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
     function ($scope, $, data) {
-        data.then(function (data) {
-            $scope.data = data.slice(0);
-            $scope.$apply();
-        });
-
         $scope.$extend({
             items: [],
             data: [],
@@ -258,6 +253,11 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
         $scope.$watch('data', function () {
             $scope.initialize();
             update();
+        });
+
+        data.then(function (data) {
+            $scope.data = data.slice(0);
+            $scope.$apply();
         });
     }
 );
