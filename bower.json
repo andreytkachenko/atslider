@@ -1,0 +1,22 @@
+{
+  "name": "AT Slider",
+  "version": "0.0.0",
+  "homepage": "https://github.com/andreytkachenko/atslider",
+  "authors": [
+    "Andrey Tkachenko"
+  ],
+  "description": "AT Slider",
+  "main": "dist/atslider.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "atframework": "git@github.com:andreytkachenko/atframework.git",
+    "atlightbox": "git@github.com:andreytkachenko/atlightbox.git"
+  }
+}

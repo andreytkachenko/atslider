@@ -1,0 +1,22 @@
+{
+  "name": "atslider",
+  "version": "0.0.0",
+  "description": "AT Slider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andreytkachenko/atslider.git"
+  },
+  "author": "Andrey Tkachenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreytkachenko/atslider/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "~0.5.1"
+  }
+}
