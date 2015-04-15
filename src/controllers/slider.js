@@ -93,6 +93,8 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
                 }).bind(this), 100);
 
                 if (this.offset !== this.prevOffset) {
+                    var index = this._normalizeIndex(this.offset);
+                    this.$emit('slider.slide', index, this.data[index], this.offset - this.prevOffset);
                     this.prevOffset = this.offset;
                     setTimeout((function () {
                         this._updateOffset();
@@ -103,15 +105,11 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
 
             transitionScrolling: function (gap, callback) {
                 this.targetScrollPosition = this.scrollLeft + gap;
-                console.log(this.targetScrollPosition, gap);
-
                 if (this.scrollLeft < 0) {
                     this.targetScrollPosition = this.scrollLeft + gap;
                 } else {
                     this.targetScrollPosition = this.scrollLeft - gap;
                 }
-
-                this.transitionScrollingInProgress = true;
 
                 var func = (function () {
                     var gap = this.targetScrollPosition - this.scrollLeft;
@@ -168,12 +166,13 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             },
 
             onImageLoadError: function (index) {
-                this.data.splice(index, 1);
+                var item = this.data.splice(index, 1);
                 for (var i = 0; i < this.items.length; i++) {
                     this.items[i].meta = this._normalizeIndex(this.items[i].offset);
                 }
 
                 this.$$parent.$apply();
+                this.$emit('slider.image-fail', index, item[0]);
             },
 
             setShowingItems: function (items) {
