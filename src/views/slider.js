@@ -2,8 +2,8 @@
  * Created by tkachenko on 14.04.15.
  */
 
-ATF.view('SliderView', ['jQuery', 'utils', '$template'],
-    function ($, utils, $template) {
+ATF.view('SliderView', ['$template'],
+    function ($template) {
         var tpl = $template()
             .div({class: 'slider'})
                 .div({class: 'slider-container', style: 'width: {{showingItems * itemWidth - 8}}px; height: {{itemWidth - 8}}px'})
@@ -32,7 +32,7 @@ ATF.view('SliderView', ['jQuery', 'utils', '$template'],
                         .$On('click', 'next()')
                         .li({'class': 'next'}).div({class:'noselect'}).text('Next');
 
-        return function ($scope, $el) {
+        return function ($scope) {
             document.body.appendChild(tpl.render($scope));
         }
     }

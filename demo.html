@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>AT Slider</title>
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/atframework/dist/atframework.js"></script>
+    <script src="src/controllers/slider.js"></script>
+    <script src="src/views/slider.js"></script>
+</head>
+<body style="margin: 0 auto">
+    <script>
+        ATF.factory('SliderData', [], function () {
+            return {
+                then: function (callback) {
+                    callback([
+                        {
+
+                        }
+                    ])
+                }
+            }
+        });
+
+
+        ATF.run(['SliderView', 'SliderController'], function ($sliderView, $sliderController) {
+            var scope = $sliderController.scope;
+            var element = $sliderView(scope);
+
+            document.appendChild(element);
+        });
+    </script>
+</body>
+</html>

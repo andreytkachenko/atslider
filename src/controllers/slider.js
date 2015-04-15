@@ -103,6 +103,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
 
             transitionScrolling: function (gap, callback) {
                 this.targetScrollPosition = this.scrollLeft + gap;
+                console.log(this.targetScrollPosition, gap);
 
                 if (this.scrollLeft < 0) {
                     this.targetScrollPosition = this.scrollLeft + gap;
