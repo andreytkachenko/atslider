@@ -87,7 +87,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
                         absOffset = -(this.itemWidth - absOffset);
                     }
                     if (absOffset) {
-                        this.transitionScrolling(absOffset);
+                        this.transitionScrolling(absOffset, null, true);
                     }
                     this.$digest();
                 }).bind(this), 100);
@@ -103,8 +103,8 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
                 }
             },
 
-            transitionScrolling: function (gap, callback) {
-                if (this.targetScrollPosition === undefined) {
+            transitionScrolling: function (gap, callback, reset) {
+                if (reset || this.targetScrollPosition === undefined) {
                     this.targetScrollPosition = this.scrollLeft;
                 }
 
