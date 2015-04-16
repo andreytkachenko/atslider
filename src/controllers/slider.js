@@ -104,11 +104,14 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             },
 
             transitionScrolling: function (gap, callback) {
-                this.targetScrollPosition = this.scrollLeft + gap;
+                if (this.targetScrollPosition === undefined) {
+                    this.targetScrollPosition = this.scrollLeft;
+                }
+
                 if (this.scrollLeft < 0) {
-                    this.targetScrollPosition = this.scrollLeft + gap;
+                    this.targetScrollPosition = this.targetScrollPosition + gap;
                 } else {
-                    this.targetScrollPosition = this.scrollLeft - gap;
+                    this.targetScrollPosition = this.targetScrollPosition - gap;
                 }
 
                 var func = (function () {
