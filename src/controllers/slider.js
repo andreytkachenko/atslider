@@ -44,14 +44,15 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
                 var items = [],
                     i, item, cache = {},
                     left = -this.span + this.offset,
-                    right = (this.span + 5 + this.offset) - 1;
+                    right = (this.span + 5 + this.offset) - 1,
+                    tmp = 0;
 
                 for (i = 0; i < this.items.length; i++) {
                     this.items[i].moving = false;
                     if (this.items[i].offset < left ||
                         this.items[i].offset > right) {
 
-                        items.push(i);
+                        items[items.length] = i;
                     } else {
                         cache[this.items[i].offset] = true;
                     }
@@ -59,7 +60,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
 
                 for (i = -this.span + this.offset; i < (this.span + 5 + this.offset) - 1; i++) {
                     if (!cache[i]) {
-                        item = items.pop();
+                        item = items[tmp++];
 
                         this.items[item].offset = i;
                         this.items[item].meta = this._normalizeIndex(i);
@@ -209,6 +210,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
                 }
 
                 this.scrollLeft = (this.offset + offset) * this.itemWidth;
+                this.targetScrollPosition = this.scrollLeft;
                 this.$digest();
             },
 
@@ -245,7 +247,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             $scope.setItemWidth(itemWidth);
         };
 
-        $(window).resize(function () {
+        $(window).on('resize orientationchange', function () {
             update();
         });
 
