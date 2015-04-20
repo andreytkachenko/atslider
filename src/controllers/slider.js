@@ -3,7 +3,7 @@
  */
 
 ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
-    function ($scope, $, data) {
+    function ($scope, $) {
         $scope.$extend({
             items: [],
             data: [],
@@ -74,6 +74,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             setOffset: function (value) {
                 this.scrollLeft = value;
                 if (!this.scrollingEnabled) {
+                    this.scrollingEnabled = true;
                     return;
                 }
 
@@ -189,13 +190,19 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             },
 
             setItemWidth: function (width) {
-                this.itemWidth = width;
-
-                if (this._handler2) clearTimeout(this._handler2);
-                this._handler2 = setTimeout((function () {
+                if (Number(this.itemWidth) !== Number(width)) {
+                    this.itemWidth = width;
+                    this.scrollLeft = this.offset * this.itemWidth;
+                    this.targetScrollPosition = this.scrollLeft;
+                    this.scrollingEnabled = false;
                     this.$digest();
-                    this._handler2 = null;
-                }).bind(this), 200);
+                }
+            },
+
+            setData: function (data) {
+                this.data = data;
+                this.initialize();
+                this.$digest();
             },
 
             goto: function (id) {
@@ -217,6 +224,7 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             initialize: function () {
                 this.width = this.itemWidth * 1000;
                 this.scrollLeft = 0;
+                this.items = [];
                 for (var i = -this.span; i < this.span + 5; i++) {
                     var index = this._normalizeIndex(i);
                     this.items.push({
@@ -228,41 +236,8 @@ ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
             }
         });
 
-        var update = function () {
-            var width = $(window).width();
-            var items = Math.floor(width / 306),
-                itemWidth = 306;
-
-            if (width < 732) {
-                items = 3;
-                itemWidth = Math.floor(width / 3);
-            }
-
-            if (width < 480) {
-                items = 2;
-                itemWidth = Math.floor(width / 2);
-            }
-
-            $scope.setShowingItems(Math.max(items, 2));
-            $scope.setItemWidth(itemWidth);
-        };
-
-        $(window).on('resize orientationchange', function () {
-            update();
-        });
-
         $scope.$on('goto', function (id) {
             this.goto(id);
-        });
-
-        $scope.$watch('data', function () {
-            $scope.initialize();
-            update();
-        });
-
-        data.then(function (data) {
-            $scope.data = data.slice(0);
-            $scope.$apply();
         });
     }
 );
