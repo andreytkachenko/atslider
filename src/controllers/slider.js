@@ -2,7 +2,7 @@
  * Created by tkachenko on 14.04.15.
  */
 
-ATF.controller('SliderController', ['$scope', 'jQuery', 'SliderData'],
+ATF.controller('SliderController', ['$scope', 'jQuery'],
     function ($scope, $) {
         $scope.$extend({
             items: [],
